@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using YoutubeExplode;
 using YoutubeExplode.Converter;
+using YoutubeExplode.Videos.Streams;
 
 namespace SilverVideoDownloader
 {
@@ -37,12 +38,14 @@ namespace SilverVideoDownloader
 
         public override async Task DownloadVideo(string videoUrl)
         {
-           YoutubeClient client = new YoutubeClient();
+            YoutubeClient client = new YoutubeClient();
 
-            client.Videos.DownloadAsync(
-                videoUrl,
-                @"E:\Video\001.mp4", 
-                builder => builder.SetPreset(ConversionPreset.UltraFast));
+            var video = await client.Videos.GetAsync(videoUrl);
+            var streamManifest = await client.Videos.Streams.GetManifestAsync(video.Id);
+            var streamInfo = streamManifest.GetMuxedStreams().GetWithHighestVideoQuality();
+
+            await client.Videos.DownloadAsync(videoUrl, @"E:\Video\001.mp4");
+            
             Console.WriteLine("Видео загружается...");
             Task.WaitAll();
             Console.WriteLine("Видео загружено");
