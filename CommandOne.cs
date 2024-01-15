@@ -35,7 +35,7 @@ namespace SilverVideoDownloader
             Console.WriteLine($"Название:  {info.Author}");
         }
 
-        public override void DownloadVideo(string videoUrl)
+        public override async Task DownloadVideo(string videoUrl)
         {
            YoutubeClient client = new YoutubeClient();
 

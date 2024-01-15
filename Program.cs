@@ -26,6 +26,8 @@ namespace SilverVideoDownloader
 
             //  выполнение
             sender.Run();
+
+            Console.ReadLine();
         }
     }
 }

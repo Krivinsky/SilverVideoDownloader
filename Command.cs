@@ -14,6 +14,6 @@ namespace SilverVideoDownloader
         public abstract string VideoUrl { get; }
 
         public abstract void GetVideoInfo(string videoUrl);
-        public abstract void DownloadVideo(string videoUrl);
+        public abstract Task DownloadVideo(string videoUrl);
     }
 }
