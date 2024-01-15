@@ -11,6 +11,7 @@ namespace SilverVideoDownloader
     /// </summary>
     public abstract class Command
     {
+        public abstract string VideoUrl { get; }
 
         public abstract void GetVideoInfo(string videoUrl);
         public abstract void DownloadVideo(string videoUrl);

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using YoutubeExplode;
+using YoutubeExplode.Converter;
 
 namespace SilverVideoDownloader
 {
@@ -15,33 +16,36 @@ namespace SilverVideoDownloader
     {
         Receiver receiver;
 
-        public CommandOne(Receiver receiver)
+        public override string VideoUrl { get; }
+
+        public CommandOne(Receiver receiver, string videoUrl)
         {
             this.receiver = receiver;
+            this.VideoUrl = videoUrl;
         }
-
-        // Выполнить
-        //public override void Run()
-        //{
-        //    Console.WriteLine("Команда отправлена");
-        //    receiver.Operation();
-        //}
-
-        // Отменить
-        //public override void Cancel()
-        //{
-        //}
-
 
         public override void GetVideoInfo(string videoUrl)
         {
             YoutubeClient client = new YoutubeClient();
-            var info = client.Videos.GetAsync(videoUrl);
+
+            var info = client.Videos.GetAsync(videoUrl).Result;
+
+            Console.WriteLine($"Название:  {info.Title}");
+            Console.WriteLine($"Название:  {info.Duration}");
+            Console.WriteLine($"Название:  {info.Author}");
         }
 
         public override void DownloadVideo(string videoUrl)
         {
+           YoutubeClient client = new YoutubeClient();
 
+            client.Videos.DownloadAsync(
+                videoUrl,
+                @"E:\Video\001.mp4", 
+                builder => builder.SetPreset(ConversionPreset.UltraFast));
+            Console.WriteLine("Видео загружается...");
+            Task.WaitAll();
+            Console.WriteLine("Видео загружено");
         }
     }
 }

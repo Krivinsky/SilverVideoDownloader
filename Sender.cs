@@ -22,13 +22,13 @@ namespace SilverVideoDownloader
         // Выполнить
         public void Run()
         {
-            _command.GetVideoInfo();
+            _command.GetVideoInfo(_command.VideoUrl);
+            _command.DownloadVideo(_command.VideoUrl);
         }
 
         // Отменить
         public void Cancel()
         {
-            _command.DownloadVideo();
         }
     }
 }

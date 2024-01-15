@@ -9,6 +9,9 @@ namespace SilverVideoDownloader
 
         static void Main(string[] args)
         {
+            Console.WriteLine("Введите URL видео для скачивания");
+            string videoUrl = Console.ReadLine();
+
             // создадим отправителя
             var sender = new Sender();
 
@@ -16,17 +19,13 @@ namespace SilverVideoDownloader
             var receiver = new Receiver();
 
             // создадим команду
-            var commandOne = new CommandOne(receiver);
+            var commandOne = new CommandOne(receiver, videoUrl);
 
             // инициализация команды
             sender.SetCommand(commandOne);
 
             //  выполнение
             sender.Run();
-
-
-            Console.WriteLine("Введите URL видео для скачивания");
-            string videoUrl = Console.ReadLine();
         }
     }
 }
