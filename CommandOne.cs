@@ -41,10 +41,12 @@ namespace SilverVideoDownloader
             YoutubeClient client = new YoutubeClient();
 
             var video = await client.Videos.GetAsync(videoUrl);
+
             var streamManifest = await client.Videos.Streams.GetManifestAsync(video.Id);
+
             var streamInfo = streamManifest.GetMuxedStreams().GetWithHighestVideoQuality();
 
-            await client.Videos.DownloadAsync(videoUrl, @"E:\Video\001.mp4");
+            await client.Videos.Streams.DownloadAsync(streamInfo, @"E:\Video\001.mp4");
             
             Console.WriteLine("Видео загружается...");
             Task.WaitAll();
